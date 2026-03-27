@@ -1,12 +1,10 @@
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
 
-public class firstClass {
+public class FillFormTest {
     @Test
     public void firstTest() {
         open("https://demoqa.com/automation-practice-form");
@@ -20,29 +18,26 @@ public class firstClass {
         $("#userEmail").setValue("bebef@bebef.com");
 
         //Gender
-        $("#gender-radio-3").click();
+        $("#genterWrapper").$(byText("Female")).click();
 
         // Mobile Number
         $("#userNumber").setValue("1234567890");
 
         //Date of Birth
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").click();
+        $(".react-datepicker__month-select").$("[value='4']").click();
         $("[value='4']").click();
-        $(".react-datepicker__year-select").click();
-        $("[value='2005']").click();
-        $(".react-datepicker__day react-datepicker__day--012").click();
+        $(".react-datepicker__year-select").$("[value='2005']").click();
+        $$(".react-datepicker__day").findBy(text("12")).click();
 
         // Subjects
         $("#subjectsInput").setValue("Maths").pressEnter();
-        $("#subjectsInput").setValue("Physics").pressEnter();
 
         //Hobbies
-        $("#hobbies-checkbox-1").click();
+        $("#hobbiesWrapper").$(byText("Music")).click();
 
         //Picture
-        $("uploadPicture").click();
-        $("input[type='file']").uploadFile(new File("src/test/resources/исп.png"));
+        $("#uploadPicture").uploadFromClasspath("исп.png");
 
         //Current adress
         $("#currentAddress").setValue("bebefiy dom, 56");
@@ -54,15 +49,15 @@ public class firstClass {
         $("#submit").click();
 
         //Проверка
-        $(".table-responsive").shouldHave(text("Nastya Nefedova"));
-        $(".table-responsive").shouldHave(text("an.nefd@yandex.com"));
+        $(".table-responsive").shouldHave(text("Anastasia Fateeva"));
+        $(".table-responsive").shouldHave(text("bebef@bebef.com"));
         $(".table-responsive").shouldHave(text("Female"));
         $(".table-responsive").shouldHave(text("1234567890"));
         $(".table-responsive").shouldHave(text("12 May,2005"));
-        $(".table-responsive").shouldHave(text("Chemistry"));
+        $(".table-responsive").shouldHave(text("Maths"));
         $(".table-responsive").shouldHave(text("Music"));
-        $(".table-responsive").shouldHave(text("Photo.jpg"));
-        $(".table-responsive").shouldHave(text("Moscow street"));
+        $(".table-responsive").shouldHave(text("исп.png"));
+        $(".table-responsive").shouldHave(text("bebefiy dom, 56"));
         $(".table-responsive").shouldHave(text("NCR Noida"));
 
 
